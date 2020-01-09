@@ -1,5 +1,9 @@
 package com.mall.server.controller;
 
+import com.mall.server.model.Response;
+import com.mall.server.model.User;
+import com.mall.server.repository.UserRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -16,16 +20,54 @@ import java.util.List;
  */
 @RestController
 public class Usermanage {
-
+    @Autowired
+    private UserRepository userRepository;
     /**
-     * 根据商品条码查询对应商品的信息，主要是查库存,收款时扫码调用
+     * 注册
      *
      * @return
      */
-    @RequestMapping(value = "/getInstoreInfo", method = RequestMethod.GET)
-    public String getInstoreInfo() {
-        return "222";
+    @RequestMapping(value = "/api/user/signup", method = RequestMethod.POST)
+    public Response signup(@RequestParam String userid,@RequestParam String username,@RequestParam String pwd,@RequestParam String address) {
+        User user = userRepository.findByUserid(userid);
+        Response response=new Response();
+        if (user != null) {
+            response.setCode(201);
+            response.setMsg("");
+            response.setT(user);
+        } else {
+            user=new User();
+            user.setUserid(userid);
+            user.setUsername(username);
+            user.setPassword(pwd);
+            user.setAddress(address);
+            userRepository.save(user);
+            response.setCode(200);
+            response.setMsg("");
+            response.setT(user);
+        }
+        return response;
     }
 
+    /**
+     * 登录
+     *
+     * @return
+     */
+    @RequestMapping(value = "/api/user/login", method = RequestMethod.POST)
+    public Response login(@RequestParam String userid,@RequestParam String pwd) {
+        User user = userRepository.findByUseridAndPassword(userid,pwd);
+        Response response=new Response();
+        if (user != null) {
+            response.setCode(200);
+            response.setMsg("");
+            response.setT(user);
+        } else {
+            response.setCode(200);
+            response.setMsg("");
+            response.setT(null);
+        }
+        return response;
+    }
 
 }
