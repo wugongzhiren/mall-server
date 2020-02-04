@@ -74,6 +74,36 @@ public class Goodsmanage {
         return response;
     }
 
+    @RequestMapping(value = "/api/goods/getByType", method = RequestMethod.GET)
+    public Response getGoods(@RequestParam String type) {
+        List<Goods> goods;
+        if(type.equals("0")){
+            goods=goodsRepository.findAll();
+        }else{
+            goods = goodsRepository.findByType(type);
+        }
+        Response response = new Response();
+        if(goods!=null){
+            response.setCode(200);
+            response.setMsg("");
+            response.setT(goods);
+        }
+        return response;
+    }
+    @RequestMapping(value = "/api/goods/getByKeyWord", method = RequestMethod.GET)
+    public Response getGoodsByKey(@RequestParam String keyword) {
+        List<Goods> goods;
+        System.out.println(keyword);
+        goods=goodsRepository.findByGoodsnameLike("%"+keyword+"%");
+        Response response = new Response();
+        if(goods!=null){
+            response.setCode(200);
+            response.setMsg("");
+            response.setT(goods);
+        }
+        return response;
+    }
+
     @RequestMapping(value = "/api/goods/delete", method = RequestMethod.DELETE)
     public Response getAll(@RequestParam String id) {
         Goods goods = goodsRepository.findById(Long.parseLong(id));

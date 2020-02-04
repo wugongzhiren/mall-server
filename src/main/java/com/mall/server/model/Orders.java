@@ -15,6 +15,7 @@ public class Orders {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;//自增ID
     private String userid;
+    private String goodid;
     private String orderName;
     private String orderNum;
     private String orderPrice;
@@ -29,6 +30,14 @@ public class Orders {
 
     public void setId(long id) {
         this.id = id;
+    }
+
+    public String getGoodid() {
+        return goodid;
+    }
+
+    public void setGoodid(String goodid) {
+        this.goodid = goodid;
     }
 
     public String getUserid() {

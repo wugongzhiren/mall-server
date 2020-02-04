@@ -37,6 +37,15 @@ public class Ticketsmanage {
         response.setCode(200);
         return response;
     }
+
+    @RequestMapping(value = "/api/goods/getTickets", method = RequestMethod.GET)
+    public Response add(@RequestParam String userid) {
+        List<Ticket> tickets =ticketsRepository.findByUserid(userid);
+        Response response = new Response();
+        response.setT(tickets);
+        response.setCode(200);
+        return response;
+    }
     /**
      * 注册
      *
