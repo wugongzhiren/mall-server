@@ -22,6 +22,10 @@ public class Orders {
     private String orderSumPrice;
     private String salePrice;
     private String creteTime;
+    private String userName;
+    private String phone;
+    private String address;
+    //0表示购物车中，未结算。1表示已经付款，2表示已经发货，3表示交易完成
     private String status;
 
     public long getId() {
@@ -102,5 +106,29 @@ public class Orders {
 
     public void setStatus(String status) {
         this.status = status;
+    }
+
+    public String getUserName() {
+        return userName;
+    }
+
+    public void setUserName(String userName) {
+        this.userName = userName;
+    }
+
+    public String getPhone() {
+        return phone;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
     }
 }

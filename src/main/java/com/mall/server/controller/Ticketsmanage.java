@@ -32,7 +32,7 @@ public class Ticketsmanage {
         Response response = new Response();
         ticket.setMoney(money);
         ticket.setUserid(userid);
-        ticket.setStatus("有效");
+        ticket.setStatus("1");
         ticketsRepository.save(ticket);
         response.setCode(200);
         return response;
@@ -65,9 +65,21 @@ public class Ticketsmanage {
      * @return
      */
     @RequestMapping(value = "/api/user/deleteTicket", method = RequestMethod.GET)
-    public Response getAllTicket(@RequestParam String id) {
+    public Response deleteTicket(@RequestParam String id) {
 
         Ticket ticket = ticketsRepository.findById(Long.parseLong(id));
+        if(ticket!=null){
+            ticketsRepository.delete(ticket);
+        }
+        Response response = new Response();
+        response.setCode(200);
+        response.setT(null);
+        return response;
+    }
+    @RequestMapping(value = "/api/user/deleteTicketByMoney", method = RequestMethod.GET)
+    public Response deleteTicketByMoney(@RequestParam String money) {
+
+        Ticket ticket = ticketsRepository.findByMoney(money);
         if(ticket!=null){
             ticketsRepository.delete(ticket);
         }

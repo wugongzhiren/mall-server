@@ -13,6 +13,7 @@ import java.util.List;
 public interface TicketsRepository extends JpaRepository<Ticket,Long> {
 
     Ticket findById(@Param("id") long id);
+    Ticket findByMoney(@Param("money") String money);
     List<Ticket> findByUserid(@Param("userid") String userid);
     /*Goods findByGoodsname(@Param("goodsname") String goodsname);
     Goods findById(@Param("id") long id);*/
