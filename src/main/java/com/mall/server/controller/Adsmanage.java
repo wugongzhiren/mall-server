@@ -11,6 +11,11 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.net.Inet4Address;
+import java.net.InetAddress;
+import java.net.NetworkInterface;
+import java.net.UnknownHostException;
+import java.util.Enumeration;
 import java.util.List;
 
 /**
@@ -73,4 +78,42 @@ public class Adsmanage {
         return response;
     }
 
+    @RequestMapping(value = "/api/ads/getIP", method = RequestMethod.GET)
+    public Response getIP() throws UnknownHostException {
+        InetAddress addr = InetAddress.getLocalHost();
+        String hostname = addr.getHostName();
+        System.out.println("Local host name: "+hostname);
+
+        Response response = new Response();
+        response.setCode(200);
+        response.setMsg(getIpAddress());
+        response.setT(adsRepository.findAll());
+        return response;
+    }
+
+    public static String getIpAddress() {
+        try {
+            Enumeration<NetworkInterface> allNetInterfaces = NetworkInterface.getNetworkInterfaces();
+            InetAddress ip = null;
+            while (allNetInterfaces.hasMoreElements()) {
+                NetworkInterface netInterface = (NetworkInterface) allNetInterfaces.nextElement();
+                if (netInterface.isLoopback() || netInterface.isVirtual() || !netInterface.isUp()) {
+                    continue;
+                } else {
+                    Enumeration<InetAddress> addresses = netInterface.getInetAddresses();
+                    while (addresses.hasMoreElements()) {
+                        ip = addresses.nextElement();
+                        if (ip != null && ip instanceof Inet4Address) {
+                            if(ip.getHostAddress().contains("192.168")) {
+                                return ip.getHostAddress();
+                            }
+                        }
+                    }
+                }
+            }
+        } catch (Exception e) {
+            System.err.println("IP地址获取失败" + e.toString());
+        }
+        return "";
+    }
 }
