@@ -11,6 +11,7 @@ public class Ticket {
     private long id;//自增ID
     private String userid;
     private String money;
+    private String counts;
     private String status;
 
     public long getId() {
@@ -27,6 +28,14 @@ public class Ticket {
 
     public void setUserid(String userid) {
         this.userid = userid;
+    }
+
+    public String getCounts() {
+        return counts;
+    }
+
+    public void setCounts(String counts) {
+        this.counts = counts;
     }
 
     public String getMoney() {

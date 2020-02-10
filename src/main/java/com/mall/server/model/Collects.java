@@ -13,9 +13,17 @@ public class Collects {
     private String goodid;
     private String goodName;
     private String unitPrice;
-
+    private String img;
     public long getId() {
         return id;
+    }
+
+    public String getImg() {
+        return img;
+    }
+
+    public void setImg(String img) {
+        this.img = img;
     }
 
     public void setId(long id) {

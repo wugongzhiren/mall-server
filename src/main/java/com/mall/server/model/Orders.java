@@ -25,6 +25,7 @@ public class Orders {
     private String userName;
     private String phone;
     private String address;
+    private String img;
     //0表示购物车中，未结算。1表示已经付款，2表示已经发货，3表示交易完成
     private String status;
 
@@ -86,6 +87,14 @@ public class Orders {
 
     public String getSalePrice() {
         return salePrice;
+    }
+
+    public String getImg() {
+        return img;
+    }
+
+    public void setImg(String img) {
+        this.img = img;
     }
 
     public void setSalePrice(String salePrice) {

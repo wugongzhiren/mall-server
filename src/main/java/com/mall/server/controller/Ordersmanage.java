@@ -43,9 +43,11 @@ public class Ordersmanage {
 
         Orders order =ordersRepository.findByGoodidAndStatusAndUserid(goodsid,"0",userid);
         if(order!=null){
+            Goods goods=goodsRepository.findById(Long.parseLong(goodsid));
             //order.setUserid(userid);
             //order.setOrderName(orderName);
             //order.setGoodid(goodsid);
+            order.setImg(goods.getImgurl());
             order.setOrderNum((Integer.parseInt(orderNum)+Integer.parseInt(order.getOrderNum()))+"");
             //order.setOrderPrice(orderPrice);
             //order.setSalePrice(salePrice);
@@ -55,6 +57,11 @@ public class Ordersmanage {
             ordersRepository.save(order);
         }else {
             Orders order1 = new Orders();
+            Goods goods=goodsRepository.findById(Long.parseLong(goodsid));
+            //order.setUserid(userid);
+            //order.setOrderName(orderName);
+            //order.setGoodid(goodsid);
+            order1.setImg(goods.getImgurl());
             order1.setUserid(userid);
             order1.setOrderName(orderName);
             order1.setGoodid(goodsid);

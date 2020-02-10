@@ -39,6 +39,7 @@ public class Collectmanage {
             collects.setUserid(userid);
             Goods goods = goodsRepository.findById(Long.parseLong(goodid));
             collects.setGoodName(goods.getGoodsname());
+            collects.setImg(goods.getImgurl());
             collects.setUnitPrice(goods.getPrice());
             collectRepository.save(collects);
         }else{

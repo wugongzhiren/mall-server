@@ -28,12 +28,21 @@ public class Ticketsmanage {
      */
     @RequestMapping(value = "/api/goods/addTicket", method = RequestMethod.POST)
     public Response add(@RequestParam String userid, @RequestParam String money) {
-        Ticket ticket = new Ticket();
+        Ticket ticket=ticketsRepository.findByUseridAndMoney(userid,money);
+        if(ticket==null) {
+            ticket = new Ticket();
+
+            ticket.setMoney(money);
+            ticket.setUserid(userid);
+            ticket.setStatus("1");
+            ticket.setCounts("1");
+            ticketsRepository.save(ticket);
+
+        }else{
+            ticket.setCounts((Integer.parseInt(ticket.getCounts())+1)+"");
+            ticketsRepository.save(ticket);
+        }
         Response response = new Response();
-        ticket.setMoney(money);
-        ticket.setUserid(userid);
-        ticket.setStatus("1");
-        ticketsRepository.save(ticket);
         response.setCode(200);
         return response;
     }
@@ -69,7 +78,12 @@ public class Ticketsmanage {
 
         Ticket ticket = ticketsRepository.findById(Long.parseLong(id));
         if(ticket!=null){
-            ticketsRepository.delete(ticket);
+            if(ticket.getCounts().equals("1")) {
+                ticketsRepository.delete(ticket);
+            }else{
+                ticket.setCounts((Integer.parseInt(ticket.getCounts())-1)+"");
+                ticketsRepository.save(ticket);
+            }
         }
         Response response = new Response();
         response.setCode(200);
