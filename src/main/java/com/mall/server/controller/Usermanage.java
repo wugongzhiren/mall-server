@@ -64,7 +64,7 @@ public class Usermanage {
             response.setMsg("");
             response.setT(user);
         } else {
-            response.setCode(200);
+            response.setCode(201);
             response.setMsg("");
             response.setT(null);
         }
